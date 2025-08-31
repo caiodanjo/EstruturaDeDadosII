@@ -106,13 +106,13 @@ class BinaryTree:
             return any_node
         return build_anytree(self.root)
 
-    def show(self):
+    def show(self, filename="arvore"):
         anytree_root = self.to_anytree()
         for pre, _, node in RenderTree(anytree_root):
             print("%s%s" % (pre, node.name))
-        DotExporter(anytree_root).to_dotfile("arvore_fixa.dot")
-        Source.from_file("arvore_fixa.dot").render("arvore_fixa", format="png", cleanup=True)
-        print("Árvore salva em 'arvore_fixa.png'.")
+        DotExporter(anytree_root).to_dotfile(f"{filename}.dot")
+        Source.from_file(f"{filename}.dot").render(filename, format="png", cleanup=True)
+        print(f"Árvore salva em '{filename}.png'.")
 
 # --------------------------------------------------------
 # 1) Árvore fixa (expressão definida no enunciado)
@@ -138,8 +138,25 @@ if __name__ == "__main__":
     novo = 50
     bt.insert(novo)
     print(f"\nÁrvore após inserir {novo}:")
-    bt.show()
+    bt.show("arvore_fixa")
 
     print(f"\nAltura da árvore: {bt.height()}")
 
     print(f"Profundidade do nó 45: {bt.depth(45)}")
+
+    # --------------------------------------------------------
+    # 2) Árvore com valores randômicos
+
+    print("\n===== Árvore Randômica =====")
+
+    random_values = [random.randint(1, 200) for _ in range(15)]
+    print("Valores randômicos gerados:", random_values)
+
+    bt_random = BinaryTree()
+    for v in random_values:
+        bt_random.insert(v)
+
+    print("\nÁrvore randômica gerada:")
+    bt_random.show("arvore_randomica")
+
+    print(f"\nAltura da árvore randômica: {bt_random.height()}")
